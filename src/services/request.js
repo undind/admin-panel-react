@@ -1,6 +1,5 @@
-import axios from 'axios';
+import axios from "axios";
 
-axios.defaults.baseURL = 'https://smmworker.perfectpanel.dev';
-axios.defaults.params = { key: '5b192d3ef26088' }
+axios.defaults.baseURL = "https://smmworker.perfectpanel.dev";
 
 export default axios;
