@@ -1,0 +1,40 @@
+export const ROUTES = (id = '') => {
+  const routes = [
+    {
+      name: 'Orders',
+      link: '/orders',
+      id: 1
+    },
+    {
+      name: 'Services',
+      link: '/services',
+      id: 2
+    },
+    {
+      name: 'Workers',
+      link: '/workers',
+      id: 3
+    },
+    {
+      name: 'Testes',
+      link: '/testes',
+      id: 4
+    },
+    {
+      name: 'Account',
+      link: '/account',
+      id: 5
+    },
+    {
+      name: 'Logout',
+      link: '/',
+      id: 6
+    }
+  ];
+
+  if (typeof id === 'number') {
+    return routes[id];
+  }
+
+  return routes;
+}
