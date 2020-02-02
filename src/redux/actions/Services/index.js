@@ -1,7 +1,12 @@
-import { getServices, getServicesConfig } from "../../../services/urls";
+import {
+    getServices,
+    getServicesConfig,
+    getServiceWithId
+} from "../../../services/urls";
 import {
     GET_SERVICES,
     GET_SERVICES_CONFIG,
+    GET_SERVICE_VIEW,
     GET_SERVICES_SUCCESS,
     GET_SERVICES_ERROR
 } from "../../types";
@@ -25,6 +30,18 @@ export const getServicesConfigAction = () => async dispatch => {
         const { data } = response;
 
         dispatch({ type: GET_SERVICES_CONFIG, payload: data.data });
+    } catch (error) {
+        dispatch({ type: GET_SERVICES_ERROR, payload: true });
+    }
+};
+
+export const getServiceWithIdAction = id => async dispatch => {
+    try {
+        const response = await getServiceWithId(id);
+        const { data } = response;
+
+        dispatch({ type: GET_SERVICE_VIEW, payload: data.data });
+        return data.data;
     } catch (error) {
         dispatch({ type: GET_SERVICES_ERROR, payload: true });
     }

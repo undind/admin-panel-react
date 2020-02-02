@@ -1,6 +1,7 @@
 import {
     GET_SERVICES,
     GET_SERVICES_CONFIG,
+    GET_SERVICE_VIEW,
     GET_SERVICES_SUCCESS,
     GET_SERVICES_ERROR
 } from "../../types";
@@ -8,6 +9,7 @@ import {
 const initialState = {
     items: [],
     config: [],
+    item: {},
     isFetching: false,
     error: false
 };
@@ -37,6 +39,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 config: action.payload
+            };
+
+        case GET_SERVICE_VIEW:
+            return {
+                ...state,
+                item: action.payload
             };
 
         default:

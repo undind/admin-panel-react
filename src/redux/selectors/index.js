@@ -8,7 +8,8 @@ export const selectServices = createSelector(
         return {
             items: Object.values(services.items),
             isFetching: services.isFetching,
-            config: services.config
+            config: services.config,
+            item: services.item
         }
     }
   )

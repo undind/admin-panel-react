@@ -14,7 +14,8 @@ import { selectServices } from "../../redux/selectors";
 
 import {
     getServicesAction,
-    getServicesConfigAction
+    getServicesConfigAction,
+    getServiceWithIdAction
 } from "../../redux/actions/Services";
 
 import ModalWindow from "../../components/Modal";
@@ -22,8 +23,19 @@ import SelectForm from "../../components/Select";
 
 const Services = props => {
     const [modal, setModal] = useState(false);
+    const [values, setValues] = useState({
+        name: "",
+        status: 1,
+        status_name: "",
+        start_type: null,
+        start_type_name: "",
+        workers: []
+    });
+    const [touched, setTouched] = useState([]);
 
-    const toggle = () => setModal(!modal);
+    const toggle = () => {
+        setModal(!modal);
+    };
 
     const dispatch = useDispatch();
     const { items, isFetching, config } = useSelector(state =>
@@ -35,26 +47,83 @@ const Services = props => {
         dispatch(getServicesConfigAction());
     }, [dispatch]);
 
+    const handleChange = event => {
+        setValues({
+            ...values,
+            [event.target.name]: event.target.value
+        });
+    };
+
+    const handleChangeSelect = obj => {
+        setValues({
+            ...values,
+            status: obj.id,
+            status_name: obj.label
+        });
+    };
+
+    const handleBlur = event => {
+        if (!touched.includes(event.target.name)) {
+            setTouched([...touched, event.target.name]);
+        }
+    };
+
+    const editService = async id => {
+        const item = await dispatch(getServiceWithIdAction(id));
+        setValues(item);
+        toggle();
+    };
+
+    console.log(values);
+
     return (
         <Container fluid className="mt-4">
             <ModalWindow toggle={toggle} modal={modal}>
                 <Form>
                     <FormGroup>
                         <Label for="exampleEmail">Service name</Label>
-                        <Input type="text" name="name" />
+                        <Input
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.name}
+                            type="text"
+                            name="name"
+                        />
                     </FormGroup>
-                    <SelectForm labelName="Status" options={config.statuses} />
+                    <SelectForm
+                        labelName="Status"
+                        options={config.statuses}
+                        onChange={handleChangeSelect}
+                        onBlur={handleBlur}
+                        value={values.status}
+                    />
                     <SelectForm
                         labelName="Start type"
                         options={config.start_types}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.start_type}
                     />
                     <p className="mb-0">Workers</p>
 
                     {config.workers &&
-                        Object.values(config.workers).map(worker => (
-                            <FormGroup check>
+                        Object.values(config.workers).map((worker, index) => (
+                            <FormGroup key={worker.id} check>
                                 <Label check>
-                                    <Input type="checkbox" /> {worker.title}
+                                    <Input
+                                        value={values.workers}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        name="checkbox"
+                                        // checked={
+                                        //     values.workers.length
+                                        //         ? worker.id ===
+                                        //           values.workers[index].id
+                                        //         : false
+                                        // }
+                                        type="checkbox"
+                                    />{" "}
+                                    {worker.title}
                                 </Label>
                             </FormGroup>
                         ))}
@@ -90,7 +159,13 @@ const Services = props => {
                                         <td>{item.workers}</td>
                                         <td>{item.status_name}</td>
                                         <td className="text-center">
-                                            <Button>Edit</Button>
+                                            <Button
+                                                onClick={() =>
+                                                    editService(item.id)
+                                                }
+                                            >
+                                                Edit
+                                            </Button>
                                         </td>
                                     </tr>
                                 );

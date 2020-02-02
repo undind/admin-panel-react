@@ -7,3 +7,7 @@ export const getServices = () => {
 export const getServicesConfig = () => {
     return axios.get('/api/v2/services/configuration', { params: { key: '5b192d3ef26088' } });
 }
+
+export const getServiceWithId = (id) => {
+    return axios.get(`/api/v2/services/view/${id}`, { params: { key: '5b192d3ef26088' } });
+}
