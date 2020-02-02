@@ -5,5 +5,6 @@ export const getPartsOfArray = (arr, index) => {
 }
 
 export const getActiveLink = (link, itemLink) => {
+  if (Array.isArray(itemLink)) return link.includes(itemLink[0]);
   return link.includes(itemLink);
 } 

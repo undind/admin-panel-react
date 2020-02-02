@@ -16,8 +16,8 @@ export const ROUTES = (id = '') => {
       id: 3
     },
     {
-      name: 'Testes',
-      link: '/testes',
+      name: 'Reports',
+      link: ['/reports', '/reports/quantity'],
       id: 4
     },
     {

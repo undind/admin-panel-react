@@ -74,8 +74,6 @@ const Services = props => {
         toggle();
     };
 
-    console.log(values);
-
     return (
         <Container fluid className="mt-4">
             <ModalWindow toggle={toggle} modal={modal}>

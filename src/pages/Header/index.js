@@ -35,7 +35,7 @@ const Header = props => {
                                 <NavLink
                                     className="p-3"
                                     tag={Link}
-                                    to={item.link}
+                                    to={Array.isArray(item.link) ? item.link[0] : item.link}
                                 >
                                     {item.name}
                                 </NavLink>
