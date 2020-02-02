@@ -1,11 +1,13 @@
 import {
     GET_SERVICES,
+    GET_SERVICES_CONFIG,
     GET_SERVICES_SUCCESS,
     GET_SERVICES_ERROR
 } from "../../types";
 
 const initialState = {
     items: [],
+    config: [],
     isFetching: false,
     error: false
 };
@@ -29,6 +31,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload
+            };
+
+        case GET_SERVICES_CONFIG:
+            return {
+                ...state,
+                config: action.payload
             };
 
         default:
