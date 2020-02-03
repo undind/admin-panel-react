@@ -29,16 +29,16 @@ const Services = props => {
         status_name: "",
         start_type: null,
         start_type_name: "",
-        workers: []
+        workers: [],
+        isEdit: false
     });
-    const [touched, setTouched] = useState([]);
 
     const toggle = () => {
         setModal(!modal);
     };
 
     const dispatch = useDispatch();
-    const { items, isFetching, config } = useSelector(state =>
+    const { items, isFetching, config, item } = useSelector(state =>
         selectServices(state)
     );
 
@@ -47,10 +47,34 @@ const Services = props => {
         dispatch(getServicesConfigAction());
     }, [dispatch]);
 
-    const handleChange = event => {
+    useEffect(() => {
+        setValues({
+            ...item,
+            workers: [] || item.workers.map(item => item.id),
+            isEdit: true
+        });
+    }, [item, config.workers]);
+
+    const handleChange = (event, worker) => {
+        const target = event.target;
+        const value =
+            target.type === "checkbox" ? target.checked : target.value;
+
+        if (target.checked && !values.workers.includes(Number(worker.id))) {
+            setValues({
+                workers: values.workers.push(Number(worker.id))
+            });
+        } else {
+            let index = values.workers.indexOf(Number(worker.id));
+            setValues({
+                workers: values.workers.splice(index, 1)
+            });
+        }
+
+        const name = target.name;
         setValues({
             ...values,
-            [event.target.name]: event.target.value
+            [name]: value
         });
     };
 
@@ -62,28 +86,20 @@ const Services = props => {
         });
     };
 
-    const handleBlur = event => {
-        if (!touched.includes(event.target.name)) {
-            setTouched([...touched, event.target.name]);
-        }
-    };
-
     const editService = async id => {
-        const item = await dispatch(getServiceWithIdAction(id));
-        setValues(item);
+        dispatch(getServiceWithIdAction(id));
         toggle();
     };
 
     return (
         <Container fluid className="mt-4">
-            <ModalWindow toggle={toggle} modal={modal}>
+            <ModalWindow toggle={toggle} modal={modal} isEdit={values.isEdit}>
                 <Form>
                     <FormGroup>
                         <Label for="exampleEmail">Service name</Label>
                         <Input
                             onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.name}
+                            value={values.name || ""}
                             type="text"
                             name="name"
                         />
@@ -92,15 +108,13 @@ const Services = props => {
                         labelName="Status"
                         options={config.statuses}
                         onChange={handleChangeSelect}
-                        onBlur={handleBlur}
-                        value={values.status}
+                        value={values.status || ""}
                     />
                     <SelectForm
                         labelName="Start type"
                         options={config.start_types}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.start_type}
+                        onChange={handleChangeSelect}
+                        value={values.start_type || ""}
                     />
                     <p className="mb-0">Workers</p>
 
@@ -110,15 +124,13 @@ const Services = props => {
                                 <Label check>
                                     <Input
                                         value={values.workers}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
+                                        onChange={event =>
+                                            handleChange(event, worker)
+                                        }
                                         name="checkbox"
-                                        // checked={
-                                        //     values.workers.length
-                                        //         ? worker.id ===
-                                        //           values.workers[index].id
-                                        //         : false
-                                        // }
+                                        checked={values.workers.includes(
+                                            Number(worker.id)
+                                        )}
                                         type="checkbox"
                                     />{" "}
                                     {worker.title}
@@ -137,7 +149,14 @@ const Services = props => {
                 </div>
             ) : (
                 <>
-                    <Button onClick={() => toggle()}>Add service</Button>
+                    <Button
+                        onClick={() => {
+                            setValues({ workers: [], isEdit: false });
+                            toggle();
+                        }}
+                    >
+                        Add service
+                    </Button>
                     <Table className="mt-4" responsive bordered hover>
                         <thead>
                             <tr>

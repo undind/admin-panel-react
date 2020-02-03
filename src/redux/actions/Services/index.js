@@ -41,7 +41,6 @@ export const getServiceWithIdAction = id => async dispatch => {
         const { data } = response;
 
         dispatch({ type: GET_SERVICE_VIEW, payload: data.data });
-        return data.data;
     } catch (error) {
         dispatch({ type: GET_SERVICES_ERROR, payload: true });
     }
