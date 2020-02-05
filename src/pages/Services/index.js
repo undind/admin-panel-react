@@ -173,7 +173,7 @@ const Services = props => {
                                     <tr key={item.id}>
                                         <th>{item.id}</th>
                                         <td>{item.name}</td>
-                                        <td>{item.workers}</td>
+                                        <td></td>
                                         <td>{item.status_name}</td>
                                         <td className="text-center">
                                             <Button
