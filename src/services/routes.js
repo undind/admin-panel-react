@@ -29,6 +29,11 @@ export const ROUTES = (id = '') => {
       name: 'Logout',
       link: '/',
       id: 6
+    },
+    {
+      name: 'Panels',
+      link: '/panels',
+      id: 7
     }
   ];
 
