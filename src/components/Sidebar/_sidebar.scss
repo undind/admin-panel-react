@@ -4,4 +4,91 @@
     box-shadow: 2px 0 4px 0 rgba(3, 33, 40, 0.02);
     background-color: #ffffff;
     transition: all 0.5s;
+    overflow-y: auto;
+
+    &-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 79px;
+        border-bottom: 1px solid #e2e5ec;
+
+        &__name {
+            font-size: 20px;
+            font-weight: bold;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+            color: #032128;
+            margin-bottom: 0;
+            margin-left: 12px;
+        }
+    }
+
+    &-menu {
+        padding: 24px 12px 12px;
+
+        .nav-item {
+            font-size: 14px;
+            font-weight: 500;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.71;
+            letter-spacing: normal;
+            color: #747e81;
+            margin-bottom: 8px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .nav-link {
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+
+                span {
+                    margin-left: 12px;
+                }
+
+                &:hover {
+                    color: #b5bbbe;
+                    transition: all 0.3s ease-out;
+
+                    svg path {
+                        fill: #b5bbbe;
+                        transition: all 0.3s ease-out;
+                    }
+                }
+
+                .badge {
+                    min-width: 22px;
+                    min-height: 22px;
+                    font-size: 12px;
+                    line-height: 1.2;
+                    border-radius: 4px;
+                    margin-left: auto;
+                    
+                    &-danger {
+                        background-color: #e94d4d;
+                    }
+
+                    &-warning {
+                        color: #fff;
+                    }
+                }
+
+                &.active {
+                    border-radius: 4px;
+                    background-color: rgba(0, 175, 204, 0.1);
+                    color: #2eacc8;
+
+                    svg path {
+                        fill: #00afcc;
+                    }
+                }
+            }
+        }
+    }
 }
