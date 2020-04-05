@@ -10,6 +10,8 @@ import { ReactComponent as SettingsIcon } from '../../assets/img/icons/settings.
 import { ReactComponent as Stores } from '../../assets/img/icons/stores.svg';
 import { ReactComponent as Support } from '../../assets/img/icons/support.svg';
 import { ReactComponent as WhatsNew } from '../../assets/img/icons/what-s-new.svg';
+import { ReactComponent as Plus } from '../../assets/img/icons/plus.svg';
+import { ReactComponent as Logout } from '../../assets/img/icons/logout.svg';
 
 export {
     Panels,
@@ -24,4 +26,6 @@ export {
     Stores,
     Support,
     WhatsNew,
+    Plus,
+    Logout
 };
